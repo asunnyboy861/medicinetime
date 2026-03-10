@@ -1,0 +1,571 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		6A0DF2372F5FA13F00B7460D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A0DF2212F5FA13D00B7460D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A0DF2282F5FA13D00B7460D;
+			remoteInfo = medicinetime;
+		};
+		6A0DF2412F5FA13F00B7460D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A0DF2212F5FA13D00B7460D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A0DF2282F5FA13D00B7460D;
+			remoteInfo = medicinetime;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6A0DF2292F5FA13D00B7460D /* medicinetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = medicinetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A0DF2362F5FA13F00B7460D /* medicinetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = medicinetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A0DF2402F5FA13F00B7460D /* medicinetimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = medicinetimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6A0DF22B2F5FA13D00B7460D /* medicinetime */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = medicinetime;
+			sourceTree = "<group>";
+		};
+		6A0DF2392F5FA13F00B7460D /* medicinetimeTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = medicinetimeTests;
+			sourceTree = "<group>";
+		};
+		6A0DF2432F5FA13F00B7460D /* medicinetimeUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = medicinetimeUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6A0DF2262F5FA13D00B7460D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A0DF2332F5FA13F00B7460D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A0DF23D2F5FA13F00B7460D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6A0DF2202F5FA13D00B7460D = {
+			isa = PBXGroup;
+			children = (
+				6A0DF22B2F5FA13D00B7460D /* medicinetime */,
+				6A0DF2392F5FA13F00B7460D /* medicinetimeTests */,
+				6A0DF2432F5FA13F00B7460D /* medicinetimeUITests */,
+				6A0DF22A2F5FA13D00B7460D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6A0DF22A2F5FA13D00B7460D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6A0DF2292F5FA13D00B7460D /* medicinetime.app */,
+				6A0DF2362F5FA13F00B7460D /* medicinetimeTests.xctest */,
+				6A0DF2402F5FA13F00B7460D /* medicinetimeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6A0DF2282F5FA13D00B7460D /* medicinetime */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A0DF24A2F5FA13F00B7460D /* Build configuration list for PBXNativeTarget "medicinetime" */;
+			buildPhases = (
+				6A0DF2252F5FA13D00B7460D /* Sources */,
+				6A0DF2262F5FA13D00B7460D /* Frameworks */,
+				6A0DF2272F5FA13D00B7460D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6A0DF22B2F5FA13D00B7460D /* medicinetime */,
+			);
+			name = medicinetime;
+			packageProductDependencies = (
+			);
+			productName = medicinetime;
+			productReference = 6A0DF2292F5FA13D00B7460D /* medicinetime.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6A0DF2352F5FA13F00B7460D /* medicinetimeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A0DF24D2F5FA13F00B7460D /* Build configuration list for PBXNativeTarget "medicinetimeTests" */;
+			buildPhases = (
+				6A0DF2322F5FA13F00B7460D /* Sources */,
+				6A0DF2332F5FA13F00B7460D /* Frameworks */,
+				6A0DF2342F5FA13F00B7460D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6A0DF2382F5FA13F00B7460D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6A0DF2392F5FA13F00B7460D /* medicinetimeTests */,
+			);
+			name = medicinetimeTests;
+			packageProductDependencies = (
+			);
+			productName = medicinetimeTests;
+			productReference = 6A0DF2362F5FA13F00B7460D /* medicinetimeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6A0DF23F2F5FA13F00B7460D /* medicinetimeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A0DF2502F5FA13F00B7460D /* Build configuration list for PBXNativeTarget "medicinetimeUITests" */;
+			buildPhases = (
+				6A0DF23C2F5FA13F00B7460D /* Sources */,
+				6A0DF23D2F5FA13F00B7460D /* Frameworks */,
+				6A0DF23E2F5FA13F00B7460D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6A0DF2422F5FA13F00B7460D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6A0DF2432F5FA13F00B7460D /* medicinetimeUITests */,
+			);
+			name = medicinetimeUITests;
+			packageProductDependencies = (
+			);
+			productName = medicinetimeUITests;
+			productReference = 6A0DF2402F5FA13F00B7460D /* medicinetimeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6A0DF2212F5FA13D00B7460D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					6A0DF2282F5FA13D00B7460D = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					6A0DF2352F5FA13F00B7460D = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 6A0DF2282F5FA13D00B7460D;
+					};
+					6A0DF23F2F5FA13F00B7460D = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 6A0DF2282F5FA13D00B7460D;
+					};
+				};
+			};
+			buildConfigurationList = 6A0DF2242F5FA13D00B7460D /* Build configuration list for PBXProject "medicinetime" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6A0DF2202F5FA13D00B7460D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6A0DF22A2F5FA13D00B7460D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6A0DF2282F5FA13D00B7460D /* medicinetime */,
+				6A0DF2352F5FA13F00B7460D /* medicinetimeTests */,
+				6A0DF23F2F5FA13F00B7460D /* medicinetimeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6A0DF2272F5FA13D00B7460D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A0DF2342F5FA13F00B7460D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A0DF23E2F5FA13F00B7460D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6A0DF2252F5FA13D00B7460D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A0DF2322F5FA13F00B7460D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A0DF23C2F5FA13F00B7460D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6A0DF2382F5FA13F00B7460D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6A0DF2282F5FA13D00B7460D /* medicinetime */;
+			targetProxy = 6A0DF2372F5FA13F00B7460D /* PBXContainerItemProxy */;
+		};
+		6A0DF2422F5FA13F00B7460D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6A0DF2282F5FA13D00B7460D /* medicinetime */;
+			targetProxy = 6A0DF2412F5FA13F00B7460D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6A0DF2482F5FA13F00B7460D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = JP4TN5PTS3;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6A0DF2492F5FA13F00B7460D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = JP4TN5PTS3;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6A0DF24B2F5FA13F00B7460D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = medicinetime/medicinetime.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP4TN5PTS3;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to scan medication barcodes and take photos of your medications.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo library access is required to select and save medication photos.";
+				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Notifications are used to alert you when medications are expiring soon or running low on stock.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zzoutuo.medicinetime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6A0DF24C2F5FA13F00B7460D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = medicinetime/medicinetime.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP4TN5PTS3;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to scan medication barcodes and take photos of your medications.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo library access is required to select and save medication photos.";
+				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Notifications are used to alert you when medications are expiring soon or running low on stock.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zzoutuo.medicinetime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6A0DF24E2F5FA13F00B7460D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP4TN5PTS3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zzoutuo.medicinetime.medicinetimeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/medicinetime.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/medicinetime";
+			};
+			name = Debug;
+		};
+		6A0DF24F2F5FA13F00B7460D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP4TN5PTS3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zzoutuo.medicinetime.medicinetimeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/medicinetime.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/medicinetime";
+			};
+			name = Release;
+		};
+		6A0DF2512F5FA13F00B7460D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP4TN5PTS3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zzoutuo.medicinetime.medicinetimeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = medicinetime;
+			};
+			name = Debug;
+		};
+		6A0DF2522F5FA13F00B7460D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP4TN5PTS3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zzoutuo.medicinetime.medicinetimeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = medicinetime;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6A0DF2242F5FA13D00B7460D /* Build configuration list for PBXProject "medicinetime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A0DF2482F5FA13F00B7460D /* Debug */,
+				6A0DF2492F5FA13F00B7460D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A0DF24A2F5FA13F00B7460D /* Build configuration list for PBXNativeTarget "medicinetime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A0DF24B2F5FA13F00B7460D /* Debug */,
+				6A0DF24C2F5FA13F00B7460D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A0DF24D2F5FA13F00B7460D /* Build configuration list for PBXNativeTarget "medicinetimeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A0DF24E2F5FA13F00B7460D /* Debug */,
+				6A0DF24F2F5FA13F00B7460D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A0DF2502F5FA13F00B7460D /* Build configuration list for PBXNativeTarget "medicinetimeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A0DF2512F5FA13F00B7460D /* Debug */,
+				6A0DF2522F5FA13F00B7460D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6A0DF2212F5FA13D00B7460D /* Project object */;
+}
