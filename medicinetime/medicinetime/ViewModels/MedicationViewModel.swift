@@ -17,6 +17,8 @@ class MedicationViewModel: NSObject, ObservableObject {
     @Published var searchText = ""
     @Published var showingAddMedication = false
     @Published var errorMessage: String?
+    @Published var expiryFilter: ExpiryFilter = .all
+    @Published var stockFilter: StockFilter = .all
     
     private let persistenceController: PersistenceController
     private var fetchedResultsController: NSFetchedResultsController<Medication>?
@@ -119,6 +121,28 @@ class MedicationViewModel: NSObject, ObservableObject {
             result = result.filter { $0.category == category.name }
         }
         
+        // Filter by expiry status
+        switch expiryFilter {
+        case .expired:
+            result = result.filter { $0.isExpired }
+        case .expiringSoon:
+            result = result.filter { $0.expiryStatus == .expiringSoon || $0.expiryStatus == .expiringIn3Months }
+        case .good:
+            result = result.filter { $0.expiryStatus == .good }
+        case .all:
+            break
+        }
+        
+        // Filter by stock status
+        switch stockFilter {
+        case .lowStock:
+            result = result.filter { $0.needsRestock }
+        case .inStock:
+            result = result.filter { !$0.needsRestock }
+        case .all:
+            break
+        }
+        
         // Filter by search text
         if !searchText.isEmpty {
             result = result.filter {
@@ -150,6 +174,30 @@ class MedicationViewModel: NSObject, ObservableObject {
     var lowStockCount: Int {
         return medications.filter { $0.needsRestock }.count
     }
+    
+    func useMedication(_ medication: Medication, quantity: Int16, notes: String?) {
+        Task {
+            await NotificationManager.shared.recordMedicationUsage(
+                medication: medication,
+                quantity: quantity,
+                notes: notes
+            )
+        }
+    }
+}
+
+// MARK: - Filter Enums
+enum ExpiryFilter: String, CaseIterable {
+    case all = "All"
+    case expired = "Expired"
+    case expiringSoon = "Expiring Soon"
+    case good = "Good"
+}
+
+enum StockFilter: String, CaseIterable {
+    case all = "All"
+    case lowStock = "Low Stock"
+    case inStock = "In Stock"
 }
 
 // MARK: - NSFetchedResultsControllerDelegate

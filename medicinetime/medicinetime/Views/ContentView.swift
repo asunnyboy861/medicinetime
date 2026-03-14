@@ -102,6 +102,38 @@ struct DashboardView: View {
                         LowStockSection(viewModel: viewModel)
                     }
                     
+                    // Restock List Button
+                    if viewModel.lowStockCount > 0 {
+                        NavigationLink {
+                            RestockListView(viewModel: viewModel)
+                        } label: {
+                            HStack {
+                                Image(systemName: "cart.fill")
+                                    .foregroundColor(.white)
+                                
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Restock List")
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.white)
+                                    
+                                    Text("\(viewModel.lowStockCount) items need restocking")
+                                        .font(.caption)
+                                        .foregroundColor(.white.opacity(0.8))
+                                }
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.white.opacity(0.6))
+                            }
+                            .padding()
+                            .background(Color.appWarning)
+                            .cornerRadius(12)
+                        }
+                        .padding(.horizontal)
+                    }
+                    
                     // Quick Actions
                     QuickActionsView(showingAddMedication: $viewModel.showingAddMedication)
                 }

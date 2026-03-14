@@ -80,28 +80,46 @@ extension NotificationManager {
             let medications = try context.fetch(request)
             guard let medication = medications.first else { return }
             
-            await MainActor.run {
-                medication.quantity = max(0, medication.quantity - 1)
-                medication.lastUsedDate = Date()
-                medication.lastUpdated = Date()
-                
-                if medication.quantity <= medication.lowStockThreshold {
-                    medication.isLowStock = true
-                }
-                
-                do {
-                    try context.save()
-                    
-                    // Schedule low stock notification if needed
-                    if medication.needsRestock {
-                        scheduleLowStockNotification(for: medication)
-                    }
-                } catch {
-                    print("Error updating medication: \(error)")
-                }
-            }
+            await recordMedicationUsage(medication: medication, quantity: 1, notes: nil)
         } catch {
             print("Error fetching medication: \(error)")
+        }
+    }
+    
+    public func recordMedicationUsage(
+        medication: Medication,
+        quantity: Int16,
+        notes: String?
+    ) async {
+        let context = PersistenceController.shared.container.viewContext
+        
+        await MainActor.run {
+            medication.quantity = max(0, medication.quantity - quantity)
+            medication.lastUsedDate = Date()
+            medication.lastUpdated = Date()
+            
+            if medication.quantity <= medication.lowStockThreshold {
+                medication.isLowStock = true
+            }
+            
+            let usage = MedicationUsage(context: context)
+            usage.id = UUID()
+            usage.medicationID = medication.id
+            usage.date = Date()
+            usage.quantity = quantity
+            usage.notes = notes
+            usage.actionType = "use"
+            usage.medication = medication
+            
+            do {
+                try context.save()
+                
+                if medication.needsRestock {
+                    scheduleLowStockNotification(for: medication)
+                }
+            } catch {
+                print("Error recording medication usage: \(error)")
+            }
         }
     }
     

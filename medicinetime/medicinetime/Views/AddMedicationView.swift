@@ -26,6 +26,7 @@ struct AddMedicationView: View {
     @State private var showingScanner = false
     @State private var showingImagePicker = false
     @State private var selectedImage: UIImage?
+    @State private var scannedBarcode: String?
     
     var body: some View {
         NavigationView {
@@ -151,12 +152,25 @@ struct AddMedicationView: View {
             }
             .sheet(isPresented: $showingScanner) {
                 BarcodeScannerView { barcode in
-                    // TODO: Fetch medication info from barcode
-                    print("Scanned barcode: \(barcode)")
+                    handleScannedBarcode(barcode)
                 }
             }
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $selectedImage)
+            }
+        }
+    }
+    
+    private func handleScannedBarcode(_ barcode: String) {
+        scannedBarcode = barcode
+        let result = BarcodeService.shared.lookup(barcode: barcode)
+        
+        if result.confidence == .high {
+            if let name = result.name {
+                self.name = name
+            }
+            if let category = result.category {
+                self.selectedCategory = viewModel.categories.first { $0.name == category }
             }
         }
     }
@@ -175,8 +189,8 @@ struct AddMedicationView: View {
         medication.isPrivate = isPrivate
         medication.lowStockThreshold = lowStockThreshold
         medication.lastUpdated = Date()
+        medication.barcode = scannedBarcode
         
-        // Save image
         if let image = selectedImage {
             medication.imageData = image.jpegData(compressionQuality: 0.8)
             medication.thumbnailData = image.thumbnailData
@@ -184,7 +198,6 @@ struct AddMedicationView: View {
         
         viewModel.addMedication(medication)
         
-        // Schedule notifications
         NotificationManager.shared.scheduleExpiryNotifications(for: medication)
         NotificationManager.shared.markMedicationAdded()
     }

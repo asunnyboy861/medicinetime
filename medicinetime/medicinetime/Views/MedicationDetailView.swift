@@ -16,6 +16,7 @@ struct MedicationDetailView: View {
     @State private var showingEditSheet = false
     @State private var showingShareSheet = false
     @State private var quantityToRemove: Int16 = 1
+    @State private var showingUseSheet = false
     
     var body: some View {
         ScrollView {
@@ -191,6 +192,13 @@ struct MedicationDetailView: View {
                     
                     // Actions
                     VStack(spacing: 12) {
+                        Button(action: { showingUseSheet = true }) {
+                            Label("Use Medication", systemImage: "minus.circle.fill")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.appPrimary)
+                        
                         Button(action: { showingEditSheet = true }) {
                             Label("Edit Medication", systemImage: "pencil")
                                 .frame(maxWidth: .infinity)
@@ -211,6 +219,9 @@ struct MedicationDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingEditSheet) {
             EditMedicationView(medication: medication)
+        }
+        .sheet(isPresented: $showingUseSheet) {
+            UseMedicationSheet(medication: medication)
         }
     }
     

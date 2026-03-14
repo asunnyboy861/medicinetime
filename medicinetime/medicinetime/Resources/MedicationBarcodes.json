@@ -1,0 +1,72 @@
+[
+    {
+        "name": "Tylenol Extra Strength",
+        "category": "Pain Relief",
+        "dosage": "500mg",
+        "manufacturer": "Johnson & Johnson",
+        "barcodes": ["300450530001", "300450530002"]
+    },
+    {
+        "name": "Advil",
+        "category": "Pain Relief",
+        "dosage": "200mg",
+        "manufacturer": "Pfizer",
+        "barcodes": ["363730001001", "363730001002"]
+    },
+    {
+        "name": "Benadryl",
+        "category": "Allergy",
+        "dosage": "25mg",
+        "manufacturer": "Johnson & Johnson",
+        "barcodes": ["300450540001"]
+    },
+    {
+        "name": "Claritin",
+        "category": "Allergy",
+        "dosage": "10mg",
+        "manufacturer": "Bayer",
+        "barcodes": ["041100001001"]
+    },
+    {
+        "name": "Zyrtec",
+        "category": "Allergy",
+        "dosage": "10mg",
+        "manufacturer": "Johnson & Johnson",
+        "barcodes": ["300450550001"]
+    },
+    {
+        "name": "Aleve",
+        "category": "Pain Relief",
+        "dosage": "220mg",
+        "manufacturer": "Bayer",
+        "barcodes": ["011300001001"]
+    },
+    {
+        "name": "Prilosec OTC",
+        "category": "Digestive Health",
+        "dosage": "20mg",
+        "manufacturer": "Procter & Gamble",
+        "barcodes": ["041100002001"]
+    },
+    {
+        "name": "Nexium 24HR",
+        "category": "Digestive Health",
+        "dosage": "20mg",
+        "manufacturer": "Pfizer",
+        "barcodes": ["041100003001"]
+    },
+    {
+        "name": "Flonase",
+        "category": "Allergy",
+        "dosage": "50mcg",
+        "manufacturer": "GSK",
+        "barcodes": ["041100004001"]
+    },
+    {
+        "name": "Miralax",
+        "category": "Digestive Health",
+        "dosage": "17g",
+        "manufacturer": "Bayer",
+        "barcodes": ["041100005001"]
+    }
+]

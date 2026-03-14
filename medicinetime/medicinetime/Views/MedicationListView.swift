@@ -55,9 +55,8 @@ struct MedicationListView: View {
     private func deleteMedications(at offsets: IndexSet) {
         for index in offsets {
             let medication = viewModel.filteredMedications[index]
-            viewContext.delete(medication)
+            viewModel.deleteMedication(medication)
         }
-        viewModel.updateMedication(viewModel.filteredMedications.first!)
     }
 }
 
