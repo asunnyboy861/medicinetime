@@ -100,37 +100,135 @@ struct SensitiveCategoriesView: View {
 }
 
 struct ExportDataView: View {
-    @State private var exportFormat = "CSV"
-    @State private var exportMethod = "Email"
-    
+    @EnvironmentObject private var viewModel: MedicationViewModel
+    @State private var exportFormat: ExportFormat = .csv
+    @State private var isExporting = false
+    @State private var exportURL: URL?
+    @State private var showShareSheet = false
+    @State private var errorMessage: String?
+    @State private var showError = false
+
+    enum ExportFormat: String, CaseIterable {
+        case csv = "CSV"
+        case pdf = "PDF"
+    }
+
     var body: some View {
         List {
-            Section("Format") {
+            Section("Export Format") {
                 Picker("Format", selection: $exportFormat) {
-                    Text("CSV").tag("CSV")
-                    Text("PDF").tag("PDF")
-                    Text("JSON").tag("JSON")
+                    ForEach(ExportFormat.allCases, id: \.self) { format in
+                        Text(format.rawValue).tag(format)
+                    }
                 }
                 .pickerStyle(.segmented)
             }
-            
-            Section("Method") {
-                Picker("Method", selection: $exportMethod) {
-                    Text("Email").tag("Email")
-                    Text("iCloud").tag("iCloud")
-                    Text("AirDrop").tag("AirDrop")
+
+            Section("Preview") {
+                HStack {
+                    Text("Medications to Export")
+                    Spacer()
+                    Text("\(viewModel.medications.count)")
+                        .foregroundColor(.secondary)
+                        .fontWeight(.semibold)
+                }
+
+                if viewModel.medications.isEmpty {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.appWarning)
+                        Text("No medications to export")
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.top, 4)
+                } else {
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.appSuccess)
+                        Text("Ready to export")
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.top, 4)
                 }
             }
-            
+
             Section {
-                Button("Export Now") {
-                    // TODO: Export functionality
+                Button(action: exportData) {
+                    HStack {
+                        Spacer()
+                        if isExporting {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                        } else {
+                            Image(systemName: "square.and.arrow.up")
+                            Text("Export \(exportFormat.rawValue)")
+                        }
+                        Spacer()
+                    }
                 }
+                .disabled(viewModel.medications.isEmpty || isExporting)
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .listRowInsets(EdgeInsets())
+                .padding(.vertical, 8)
             }
+            .listRowBackground(Color.clear)
         }
         .navigationTitle("Export Data")
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showShareSheet) {
+            if let url = exportURL {
+                ShareSheet(items: [url])
+            }
+        }
+        .alert("Export Error", isPresented: $showError) {
+            Button("OK") { }
+        } message: {
+            Text(errorMessage ?? "An error occurred during export. Please try again.")
+        }
     }
+
+    private func exportData() {
+        isExporting = true
+
+        Task {
+            let url: URL?
+
+            switch exportFormat {
+            case .csv:
+                url = ExportService.shared.exportToCSV(
+                    medications: viewModel.medications
+                )
+            case .pdf:
+                url = ExportService.shared.exportToPDF(
+                    medications: viewModel.medications
+                )
+            }
+
+            await MainActor.run {
+                isExporting = false
+
+                if let url = url {
+                    exportURL = url
+                    showShareSheet = true
+                } else {
+                    errorMessage = "Failed to generate export file"
+                    showError = true
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Share Sheet Wrapper
+struct ShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 struct VersionView: View {

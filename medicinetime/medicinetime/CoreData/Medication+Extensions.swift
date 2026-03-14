@@ -95,6 +95,86 @@ extension Medication {
         }
         return quantity
     }
+    
+    // MARK: - Prescription Properties
+    
+    public var isPrescription: Bool {
+        get { isPrescription_ }
+        set { isPrescription_ = newValue }
+    }
+    
+    public var refillDate: Date? {
+        get { refillDate_ }
+        set { refillDate_ = newValue }
+    }
+    
+    public var prescriptionNumber: String? {
+        get { prescriptionNumber_ }
+        set { prescriptionNumber_ = newValue }
+    }
+    
+    public var displayPrescriptionInfo: String {
+        if isPrescription {
+            if let refill = refillDate {
+                return "Rx • Refill: \(formatDate(refill))"
+            }
+            return "Rx Only"
+        }
+        return "OTC"
+    }
+    
+    public var needsRefill: Bool {
+        guard isPrescription, let refill = refillDate else { return false }
+        return refill <= Date().addingTimeInterval(7 * 86400)
+    }
+    
+    // MARK: - Pharmacy Information
+    
+    public var pharmacyName: String? {
+        get { pharmacyName_ }
+        set { pharmacyName_ = newValue }
+    }
+    
+    public var pharmacyPhone: String? {
+        get { pharmacyPhone_ }
+        set { pharmacyPhone_ = newValue }
+    }
+    
+    public var displayPharmacy: String {
+        pharmacyName ?? "Not specified"
+    }
+    
+    // MARK: - Insurance Information
+    
+    public var insuranceProvider: String? {
+        get { insuranceProvider_ }
+        set { insuranceProvider_ = newValue }
+    }
+    
+    public var insurancePolicyNumber: String? {
+        get { insurancePolicyNumber_ }
+        set { insurancePolicyNumber_ = newValue }
+    }
+    
+    public var copayAmount: Double {
+        get { copayAmount_ }
+        set { copayAmount_ = newValue }
+    }
+    
+    public var displayCopay: String {
+        if copayAmount > 0 {
+            return String(format: "$%.2f", copayAmount)
+        }
+        return "N/A"
+    }
+    
+    // MARK: - Helper
+    
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter.string(from: date)
+    }
 }
 
 // MARK: - Expiry Status Enum

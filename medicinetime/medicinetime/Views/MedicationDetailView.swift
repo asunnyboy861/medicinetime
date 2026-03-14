@@ -190,6 +190,199 @@ struct MedicationDetailView: View {
                         .cornerRadius(12)
                     }
                     
+                    // Prescription Information
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack {
+                            Image(systemName: "doc.text.fill")
+                                .foregroundColor(.appPrimary)
+                            
+                            Text("Prescription Info")
+                                .font(.headline)
+                            
+                            Spacer()
+                            
+                            // Rx/OTC Badge
+                            Text(medication.isPrescription ? "Rx" : "OTC")
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(medication.isPrescription ? Color.appError.opacity(0.1) : Color.appSuccess.opacity(0.1))
+                                .foregroundColor(medication.isPrescription ? .appError : .appSuccess)
+                                .cornerRadius(8)
+                        }
+                        
+                        if medication.isPrescription {
+                            if let rxNumber = medication.prescriptionNumber {
+                                HStack {
+                                    Text("Rx Number:")
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                    Text(rxNumber)
+                                        .font(.subheadline)
+                                }
+                            }
+                            
+                            if let refill = medication.refillDate {
+                                HStack {
+                                    Text("Refill Date:")
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                    HStack(spacing: 4) {
+                                        Text(refill, style: .date)
+                                            .font(.subheadline)
+                                        
+                                        if medication.needsRefill {
+                                            Image(systemName: "exclamationmark.triangle.fill")
+                                                .foregroundColor(.appError)
+                                                .font(.caption)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding()
+                    .background(Color.appBackground)
+                    .cornerRadius(12)
+                    
+                    // Pharmacy & Insurance
+                    if medication.pharmacyName != nil || medication.insuranceProvider != nil {
+                        VStack(alignment: .leading, spacing: 12) {
+                            if let pharmacy = medication.pharmacyName {
+                                HStack {
+                                    Image(systemName: "building.columns.fill")
+                                        .foregroundColor(.appPrimary)
+                                    
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Pharmacy")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                        Text(pharmacy)
+                                            .font(.subheadline)
+                                        
+                                        if let phone = medication.pharmacyPhone {
+                                            Text(phone)
+                                                .font(.caption)
+                                                .foregroundColor(.appPrimary)
+                                        }
+                                    }
+                                    
+                                    Spacer()
+                                }
+                            }
+                            
+                            if medication.insuranceProvider != nil {
+                                Divider()
+                                
+                                HStack {
+                                    Image(systemName: "shield.fill")
+                                        .foregroundColor(.appSuccess)
+                                    
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Insurance")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                        
+                                        if let provider = medication.insuranceProvider {
+                                            Text(provider)
+                                                .font(.subheadline)
+                                        }
+                                        
+                                        if let policy = medication.insurancePolicyNumber {
+                                            Text("Policy: \(policy)")
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                        }
+                                        
+                                        if medication.copayAmount > 0 {
+                                            Text("Copay: \(medication.displayCopay)")
+                                                .font(.caption)
+                                                .foregroundColor(.appPrimary)
+                                                .fontWeight(.medium)
+                                        }
+                                    }
+                                    
+                                    Spacer()
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(Color.appBackground)
+                        .cornerRadius(12)
+                    }
+                    
+                    // FDA Lookup Button
+                    Button(action: { openFDALookup() }) {
+                        HStack(spacing: 12) {
+                            Image(systemName: "globe")
+                                .font(.title3)
+                                .foregroundColor(.appPrimary)
+                                .frame(width: 32)
+                            
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("FDA Drug Information")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Text("Look up official FDA data")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            Spacer()
+                            
+                            Image(systemName: "arrow.up.right.square")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding()
+                        .background(Color.appBackground)
+                        .cornerRadius(12)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    // Usage History Link
+                    NavigationLink(destination: UsageHistoryView(medication: medication)) {
+                        HStack(spacing: 12) {
+                            Image(systemName: "clock.arrow.circlepath")
+                                .font(.title3)
+                                .foregroundColor(.appPrimary)
+                                .frame(width: 32)
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Usage History")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Text("View medication usage records")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+
+                            Spacer()
+
+                            // Show record count badge
+                            let count = viewModel.fetchUsageHistory(for: medication).count
+                            if count > 0 {
+                                Text("\(count)")
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color.appPrimary)
+                                    .clipShape(Capsule())
+                            }
+
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding()
+                        .background(Color.appBackground)
+                        .cornerRadius(12)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+
                     // Actions
                     VStack(spacing: 12) {
                         Button(action: { showingUseSheet = true }) {
@@ -198,13 +391,13 @@ struct MedicationDetailView: View {
                         }
                         .buttonStyle(.borderedProminent)
                         .tint(.appPrimary)
-                        
+
                         Button(action: { showingEditSheet = true }) {
                             Label("Edit Medication", systemImage: "pencil")
                                 .frame(maxWidth: .infinity)
                         }
                         .buttonStyle(.bordered)
-                        
+
                         Button(role: .destructive, action: { deleteMedication() }) {
                             Label("Delete Medication", systemImage: "trash")
                                 .frame(maxWidth: .infinity)
@@ -228,6 +421,15 @@ struct MedicationDetailView: View {
     private func deleteMedication() {
         viewModel.deleteMedication(medication)
         dismiss()
+    }
+    
+    private func openFDALookup() {
+        let searchTerm = medication.name?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let urlString = "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&varApplNo=&varProductNo=&varTradeName=\(searchTerm)"
+        
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url)
+        }
     }
 }
 

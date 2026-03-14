@@ -17,7 +17,20 @@ struct ContentView: View {
     @State private var selectedTab = 0
     @Binding var shortcutAction: ShortcutAction?
     
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    
     var body: some View {
+        Group {
+            if hasCompletedOnboarding {
+                mainContent
+            } else {
+                OnboardingView(showAddMedication: $viewModel.showingAddMedication)
+                    .environmentObject(viewModel)
+            }
+        }
+    }
+    
+    private var mainContent: some View {
         TabView(selection: $selectedTab) {
             DashboardView(viewModel: viewModel)
                 .tabItem {
@@ -84,73 +97,109 @@ struct ContentView: View {
 struct DashboardView: View {
     @ObservedObject var viewModel: MedicationViewModel
     @EnvironmentObject var persistenceController: PersistenceController
+    @State private var showScanner = false
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Statistics Cards
-                    StatisticsCardsView(viewModel: viewModel)
-                    
-                    // Expiring Soon Section
-                    if viewModel.expiringSoonCount > 0 {
-                        ExpiringSoonSection(viewModel: viewModel)
-                    }
-                    
-                    // Low Stock Section
-                    if viewModel.lowStockCount > 0 {
-                        LowStockSection(viewModel: viewModel)
-                    }
-                    
-                    // Restock List Button
-                    if viewModel.lowStockCount > 0 {
-                        NavigationLink {
-                            RestockListView(viewModel: viewModel)
-                        } label: {
-                            HStack {
-                                Image(systemName: "cart.fill")
-                                    .foregroundColor(.white)
-                                
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("Restock List")
-                                        .font(.subheadline)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(.white)
-                                    
-                                    Text("\(viewModel.lowStockCount) items need restocking")
-                                        .font(.caption)
-                                        .foregroundColor(.white.opacity(0.8))
-                                }
-                                
-                                Spacer()
-                                
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.white.opacity(0.6))
+            Group {
+                if viewModel.medications.isEmpty {
+                    DashboardEmptyStateView(
+                        showAddMedication: $viewModel.showingAddMedication,
+                        showScanner: $showScanner
+                    )
+                    .navigationTitle("MedCabinet")
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                viewModel.showingAddMedication = true
+                            }) {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.title2)
                             }
-                            .padding()
-                            .background(Color.appWarning)
-                            .cornerRadius(12)
                         }
-                        .padding(.horizontal)
                     }
-                    
-                    // Quick Actions
-                    QuickActionsView(showingAddMedication: $viewModel.showingAddMedication)
+                } else {
+                    dashboardContent
                 }
-                .padding()
             }
-            .navigationTitle("MedCabinet")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        viewModel.showingAddMedication = true
-                    }) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.title2)
-                    }
+            .sheet(isPresented: $showScanner) {
+                BarcodeScannerView { barcode in
+                    handleScannedBarcode(barcode)
                 }
             }
         }
+    }
+    
+    private var dashboardContent: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                // Statistics Cards
+                StatisticsCardsView(viewModel: viewModel)
+                
+                // Expiring Soon Section
+                if viewModel.expiringSoonCount > 0 {
+                    ExpiringSoonSection(viewModel: viewModel)
+                }
+                
+                // Low Stock Section
+                if viewModel.lowStockCount > 0 {
+                    LowStockSection(viewModel: viewModel)
+                }
+                
+                // Restock List Button
+                if viewModel.lowStockCount > 0 {
+                    NavigationLink {
+                        RestockListView(viewModel: viewModel)
+                    } label: {
+                        HStack {
+                            Image(systemName: "cart.fill")
+                                .foregroundColor(.white)
+                            
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Restock List")
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.white)
+                                
+                                Text("\(viewModel.lowStockCount) items need restocking")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.8))
+                            }
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.white.opacity(0.6))
+                        }
+                        .padding()
+                        .background(Color.appWarning)
+                        .cornerRadius(12)
+                    }
+                    .padding(.horizontal)
+                }
+                
+                // Quick Actions
+                QuickActionsView(showingAddMedication: $viewModel.showingAddMedication)
+            }
+            .padding()
+        }
+        .navigationTitle("MedCabinet")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    viewModel.showingAddMedication = true
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title2)
+                }
+            }
+        }
+    }
+    
+    private func handleScannedBarcode(_ barcode: String) {
+        showScanner = false
+        viewModel.showingAddMedication = true
+        // Barcode will be handled by AddMedicationView
     }
 }
 

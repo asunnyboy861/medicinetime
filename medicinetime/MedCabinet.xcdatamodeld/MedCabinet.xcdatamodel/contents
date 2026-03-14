@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="NO" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
         <attribute name="color" optional="YES" attributeType="String"/>
         <attribute name="icon" optional="YES" attributeType="String"/>
@@ -19,12 +19,16 @@
         <attribute name="averageUsagePerMonth" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="barcode" optional="YES" attributeType="String"/>
         <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="copayAmount_" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="dosage" optional="YES" attributeType="String"/>
         <attribute name="expirationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="familyID" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="insurancePolicyNumber_" optional="YES" attributeType="String"/>
+        <attribute name="insuranceProvider_" optional="YES" attributeType="String"/>
         <attribute name="isLowStock" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isPrescription_" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isPrivate" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lastUsedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -32,8 +36,12 @@
         <attribute name="lowStockThreshold" attributeType="Integer 16" defaultValueString="5" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="pharmacyName_" optional="YES" attributeType="String"/>
+        <attribute name="pharmacyPhone_" optional="YES" attributeType="String"/>
+        <attribute name="prescriptionNumber_" optional="YES" attributeType="String"/>
         <attribute name="purchaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="quantity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="refillDate_" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="thumbnailData" optional="YES" attributeType="Binary"/>
         <attribute name="unit" optional="YES" attributeType="String"/>
         <relationship name="categoryRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="medications" inverseEntity="Category"/>

@@ -27,6 +27,19 @@ struct AddMedicationView: View {
     @State private var showingImagePicker = false
     @State private var selectedImage: UIImage?
     @State private var scannedBarcode: String?
+    @State private var showAutoFillConfirmation = false
+    @State private var showManualEntryTip = false
+    @State private var lastScannedMedicationName: String?
+    
+    // MARK: - Prescription & Pharmacy Fields
+    @State private var isPrescription = false
+    @State private var prescriptionNumber = ""
+    @State private var refillDate = Date().addingTimeInterval(30 * 86400)
+    @State private var pharmacyName = ""
+    @State private var pharmacyPhone = ""
+    @State private var insuranceProvider = ""
+    @State private var insurancePolicyNumber = ""
+    @State private var copayAmount: Double = 0.0
     
     var body: some View {
         NavigationView {
@@ -104,6 +117,45 @@ struct AddMedicationView: View {
                     }
                 }
                 
+                // Prescription Section
+                Section(header: Text("Prescription Information")) {
+                    Toggle("Prescription Medication (Rx)", isOn: $isPrescription)
+                    
+                    if isPrescription {
+                        TextField("Prescription Number (Optional)", text: $prescriptionNumber)
+                        
+                        DatePicker("Refill Date", selection: $refillDate, displayedComponents: .date)
+                        
+                        if refillDate <= Date().addingTimeInterval(7 * 86400) {
+                            Label("Refill needed soon", systemImage: "exclamationmark.triangle.fill")
+                                .foregroundColor(.appWarning)
+                                .font(.caption)
+                        }
+                    }
+                }
+                
+                // Pharmacy Section
+                Section(header: Text("Pharmacy")) {
+                    TextField("Pharmacy Name (e.g., CVS, Walgreens)", text: $pharmacyName)
+                    TextField("Phone Number", text: $pharmacyPhone)
+                        .keyboardType(.phonePad)
+                }
+                
+                // Insurance Section
+                Section(header: Text("Insurance")) {
+                    TextField("Insurance Provider", text: $insuranceProvider)
+                    TextField("Policy Number", text: $insurancePolicyNumber)
+                    
+                    HStack {
+                        Text("Copay Amount")
+                        Spacer()
+                        TextField("$0.00", value: $copayAmount, format: .currency(code: "USD"))
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 100)
+                    }
+                }
+                
                 // Notes Section
                 Section(header: Text("Notes")) {
                     TextField("Additional notes", text: $notes, axis: .vertical)
@@ -158,20 +210,42 @@ struct AddMedicationView: View {
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $selectedImage)
             }
+            .alert("Medication Recognized", isPresented: $showAutoFillConfirmation) {
+                Button("OK, I'll Review") { }
+            } message: {
+                if let medName = lastScannedMedicationName {
+                    Text("We've auto-filled details for \(medName). Please review and confirm before saving.")
+                } else {
+                    Text("We've automatically filled in the medication details. Please review and confirm before saving.")
+                }
+            }
+            .alert("Barcode Not Found", isPresented: $showManualEntryTip) {
+                Button("Enter Manually") { }
+            } message: {
+                Text("This barcode isn't in our database. Please enter the medication details manually.")
+            }
         }
     }
-    
+
     private func handleScannedBarcode(_ barcode: String) {
         scannedBarcode = barcode
         let result = BarcodeService.shared.lookup(barcode: barcode)
-        
-        if result.confidence == .high {
-            if let name = result.name {
-                self.name = name
+
+        switch result.confidence {
+        case .high:
+            // Auto-fill all available fields
+            if let medName = result.name {
+                self.name = medName
+                self.lastScannedMedicationName = medName
             }
-            if let category = result.category {
-                self.selectedCategory = viewModel.categories.first { $0.name == category }
+            if let categoryName = result.category {
+                self.selectedCategory = viewModel.categories.first { $0.name == categoryName }
             }
+            // Show confirmation to user
+            showAutoFillConfirmation = true
+        case .medium, .low:
+            // No match or low confidence, prompt manual entry
+            showManualEntryTip = true
         }
     }
     
@@ -190,6 +264,16 @@ struct AddMedicationView: View {
         medication.lowStockThreshold = lowStockThreshold
         medication.lastUpdated = Date()
         medication.barcode = scannedBarcode
+        
+        // Prescription & Pharmacy Information
+        medication.isPrescription = isPrescription
+        medication.prescriptionNumber = prescriptionNumber.isEmpty ? nil : prescriptionNumber
+        medication.refillDate = isPrescription ? refillDate : nil
+        medication.pharmacyName = pharmacyName.isEmpty ? nil : pharmacyName
+        medication.pharmacyPhone = pharmacyPhone.isEmpty ? nil : pharmacyPhone
+        medication.insuranceProvider = insuranceProvider.isEmpty ? nil : insuranceProvider
+        medication.insurancePolicyNumber = insurancePolicyNumber.isEmpty ? nil : insurancePolicyNumber
+        medication.copayAmount = copayAmount
         
         if let image = selectedImage {
             medication.imageData = image.jpegData(compressionQuality: 0.8)

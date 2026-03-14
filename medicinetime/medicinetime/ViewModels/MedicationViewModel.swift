@@ -91,16 +91,19 @@ class MedicationViewModel: NSObject, ObservableObject {
     func addMedication(_ medication: Medication) {
         showingAddMedication = false
         persistenceController.saveContext()
+        WidgetDataManager.shared.saveWidgetData(from: persistenceController.container.viewContext)
     }
-    
+
     func updateMedication(_ medication: Medication) {
         medication.lastUpdated = Date()
         persistenceController.saveContext()
+        WidgetDataManager.shared.saveWidgetData(from: persistenceController.container.viewContext)
     }
-    
+
     func deleteMedication(_ medication: Medication) {
         persistenceController.container.viewContext.delete(medication)
         persistenceController.saveContext()
+        WidgetDataManager.shared.saveWidgetData(from: persistenceController.container.viewContext)
     }
     
     func updateStock(medicationID: UUID, quantity: Int16) {
@@ -182,6 +185,22 @@ class MedicationViewModel: NSObject, ObservableObject {
                 quantity: quantity,
                 notes: notes
             )
+        }
+    }
+
+    // MARK: - Usage History
+
+    func fetchUsageHistory(for medication: Medication) -> [MedicationUsage] {
+        let request: NSFetchRequest<MedicationUsage> = MedicationUsage.fetchRequest()
+        guard let medicationID = medication.id else { return [] }
+        request.predicate = NSPredicate(format: "medicationID == %@", medicationID as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+
+        do {
+            return try persistenceController.container.viewContext.fetch(request)
+        } catch {
+            print("Error fetching usage history: \(error)")
+            return []
         }
     }
 }
