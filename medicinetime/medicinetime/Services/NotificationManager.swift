@@ -85,44 +85,50 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
     
     // MARK: - Scheduling
     func scheduleExpiryNotifications(for medication: Medication) {
+        guard let medicationID = medication.id,
+              let expirationDate = medication.expirationDate,
+              let medicationName = medication.name else {
+            return
+        }
+        
         // Remove existing notifications
         center.removePendingNotificationRequests(
-            withIdentifiers: ["expiry_\(medication.id.uuidString)"]
+            withIdentifiers: ["expiry_\(medicationID.uuidString)"]
         )
         
         // Schedule 3-month reminder
         scheduleNotification(
-            id: "expiry_3m_\(medication.id.uuidString)",
-            date: medication.expirationDate.addingTimeInterval(-90 * 86400),
+            id: "expiry_3m_\(medicationID.uuidString)",
+            date: expirationDate.addingTimeInterval(-90 * 86400),
             title: "Medication Expiring Soon",
-            body: "\(medication.name) will expire in 3 months. Time to check your supply!",
+            body: "\(medicationName) will expire in 3 months. Time to check your supply!",
             categoryIdentifier: "EXPIRY_REMINDER"
         )
         
         // Schedule 1-month reminder
         scheduleNotification(
-            id: "expiry_1m_\(medication.id.uuidString)",
-            date: medication.expirationDate.addingTimeInterval(-30 * 86400),
+            id: "expiry_1m_\(medicationID.uuidString)",
+            date: expirationDate.addingTimeInterval(-30 * 86400),
             title: "Time to Restock?",
-            body: "\(medication.name) expires in 1 month. Consider purchasing a replacement.",
+            body: "\(medicationName) expires in 1 month. Consider purchasing a replacement.",
             categoryIdentifier: "EXPIRY_REMINDER"
         )
         
         // Schedule 1-week urgent reminder
         scheduleNotification(
-            id: "expiry_1w_\(medication.id.uuidString)",
-            date: medication.expirationDate.addingTimeInterval(-7 * 86400),
+            id: "expiry_1w_\(medicationID.uuidString)",
+            date: expirationDate.addingTimeInterval(-7 * 86400),
             title: "⚠️ Urgent: Expiring Soon",
-            body: "\(medication.name) expires in 1 week. Last chance to use it!",
+            body: "\(medicationName) expires in 1 week. Last chance to use it!",
             categoryIdentifier: "EXPIRY_URGENT"
         )
         
         // Schedule expiry day notification
         scheduleNotification(
-            id: "expiry_day_\(medication.id.uuidString)",
-            date: medication.expirationDate,
+            id: "expiry_day_\(medicationID.uuidString)",
+            date: expirationDate,
             title: "❌ Expired Today",
-            body: "\(medication.name) expires today. Please dispose of it safely.",
+            body: "\(medicationName) expires today. Please dispose of it safely.",
             categoryIdentifier: "EXPIRY_EXPIRED"
         )
     }

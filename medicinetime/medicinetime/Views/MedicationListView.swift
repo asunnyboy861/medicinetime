@@ -109,9 +109,9 @@ struct CategoryFilterView: View {
                 
                 ForEach(categories) { category in
                     CategoryChip(
-                        title: category.name,
-                        icon: category.icon,
-                        color: category.uiColor,
+                        title: category.displayName,
+                        icon: category.displayIcon,
+                        color: category.displayColor,
                         isSelected: selectedCategory == category
                     ) {
                         selectedCategory = category

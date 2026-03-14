@@ -114,10 +114,12 @@ extension NotificationManager {
             let medications = try context.fetch(request)
             guard let medication = medications.first else { return }
             
+            let medicationName = medication.name ?? "Medication"
+            
             // Schedule new notification for 1 hour later
             let content = UNMutableNotificationContent()
             content.title = "Medication Reminder"
-            content.body = "\(medication.name) is expiring soon. Don't forget to check it!"
+            content.body = "\(medicationName) is expiring soon. Don't forget to check it!"
             content.sound = .default
             content.categoryIdentifier = "EXPIRY_REMINDER"
             content.userInfo = ["medicationID": medicationID.uuidString]
@@ -161,21 +163,25 @@ extension NotificationManager {
     }
     
     private func scheduleLowStockNotification(for medication: Medication) {
+        guard let medicationID = medication.id else { return }
+        let medicationName = medication.name ?? "Medication"
+        let medicationUnit = medication.unit ?? "units"
+        
         // Remove existing low stock notifications
         center.removePendingNotificationRequests(
-            withIdentifiers: ["low_stock_\(medication.id.uuidString)"]
+            withIdentifiers: ["low_stock_\(medicationID.uuidString)"]
         )
         
         let content = UNMutableNotificationContent()
         content.title = "Low Stock Alert"
-        content.body = "\(medication.name) is running low. Only \(medication.quantity) \(medication.unit) left."
+        content.body = "\(medicationName) is running low. Only \(medication.quantity) \(medicationUnit) left."
         content.sound = .default
         content.categoryIdentifier = "LOW_STOCK"
-        content.userInfo = ["medicationID": medication.id.uuidString]
+        content.userInfo = ["medicationID": medicationID.uuidString]
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(
-            identifier: "low_stock_\(medication.id.uuidString)",
+            identifier: "low_stock_\(medicationID.uuidString)",
             content: content,
             trigger: trigger
         )

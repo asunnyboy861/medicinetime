@@ -12,7 +12,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var persistenceController: PersistenceController
     @EnvironmentObject var notificationManager: NotificationManager
-    @StateObject private var viewModel = MedicationViewModel()
+    @ObservedObject var viewModel: MedicationViewModel
     
     @State private var selectedTab = 0
     @Binding var shortcutAction: ShortcutAction?
@@ -46,8 +46,8 @@ struct ContentView: View {
         .sheet(isPresented: $viewModel.showingAddMedication) {
             AddMedicationView(viewModel: viewModel)
         }
-        .onChange(of: shortcutAction) { action in
-            guard let action = action else { return }
+        .onChange(of: shortcutAction) { oldValue, newValue in
+            guard let action = newValue else { return }
             handleShortcutAction(action)
             shortcutAction = nil
         }
@@ -300,8 +300,10 @@ struct QuickActionButton: View {
 // MARK: - Preview
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(shortcutAction: .constant(nil))
-            .environmentObject(PersistenceController.preview)
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        let persistence = PersistenceController.preview
+        let viewModel = MedicationViewModel(persistenceController: persistence)
+        ContentView(viewModel: viewModel, shortcutAction: .constant(nil))
+            .environmentObject(persistence)
+            .environment(\.managedObjectContext, persistence.container.viewContext)
     }
 }

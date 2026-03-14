@@ -16,35 +16,7 @@ struct CategoriesView: View {
             List {
                 ForEach(viewModel.categories) { category in
                     NavigationLink(destination: CategoryDetailView(category: category, viewModel: viewModel)) {
-                        HStack(spacing: 16) {
-                            // Icon
-                            ZStack {
-                                Circle()
-                                    .fill(category.uiColor.opacity(0.1))
-                                    .frame(width: 50, height: 50)
-                                
-                                Image(systemName: category.icon)
-                                    .font(.title2)
-                                    .foregroundColor(category.uiColor)
-                            }
-                            
-                            // Info
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(category.name)
-                                    .font(.headline)
-                                
-                                Text("\(category.medicationCount) medications")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                            }
-                            
-                            Spacer()
-                            
-                            // Arrow
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(.vertical, 8)
+                        CategoryRowView(category: category)
                     }
                 }
                 .onDelete(perform: deleteCategory)
@@ -70,6 +42,39 @@ struct CategoriesView: View {
     }
 }
 
+struct CategoryRowView: View {
+    let category: Category
+    
+    var body: some View {
+        HStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(category.displayColor.opacity(0.1))
+                    .frame(width: 50, height: 50)
+                
+                Image(systemName: category.displayIcon)
+                    .font(.title2)
+                    .foregroundColor(category.displayColor)
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(category.displayName)
+                    .font(.headline)
+                
+                Text("\(category.medicationCount) medications")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .foregroundColor(.secondary)
+        }
+        .padding(.vertical, 8)
+    }
+}
+
 // MARK: - Category Detail View
 struct CategoryDetailView: View {
     let category: Category
@@ -81,23 +86,23 @@ struct CategoryDetailView: View {
                 HStack {
                     Text("Name")
                     Spacer()
-                    Text(category.name)
+                    Text(category.displayName)
                         .foregroundColor(.secondary)
                 }
                 
                 HStack {
                     Text("Icon")
                     Spacer()
-                    Image(systemName: category.icon)
+                    Image(systemName: category.displayIcon)
                         .font(.title2)
-                        .foregroundColor(category.uiColor)
+                        .foregroundColor(category.displayColor)
                 }
                 
                 HStack {
                     Text("Color")
                     Spacer()
                     Circle()
-                        .fill(category.uiColor)
+                        .fill(category.displayColor)
                         .frame(width: 24, height: 24)
                 }
             }
@@ -112,7 +117,7 @@ struct CategoryDetailView: View {
                 }
             }
         }
-        .navigationTitle(category.name)
+        .navigationTitle(category.displayName)
         .navigationBarTitleDisplayMode(.large)
     }
 }

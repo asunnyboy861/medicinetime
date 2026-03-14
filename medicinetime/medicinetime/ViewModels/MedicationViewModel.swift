@@ -122,7 +122,7 @@ class MedicationViewModel: NSObject, ObservableObject {
         // Filter by search text
         if !searchText.isEmpty {
             result = result.filter {
-                $0.name.localizedCaseInsensitiveContains(searchText) ||
+                ($0.name?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                 ($0.notes?.localizedCaseInsensitiveContains(searchText) ?? false)
             }
         }

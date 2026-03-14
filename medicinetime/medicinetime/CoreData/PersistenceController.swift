@@ -19,16 +19,45 @@ class PersistenceController: ObservableObject {
         
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        } else {
+            // Configure CloudKit options
+            if let description = container.persistentStoreDescriptions.first {
+                // Enable automatic migration
+                description.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)
+                description.setOption(true as NSNumber, forKey: NSInferMappingModelAutomaticallyOption)
+                
+                // Enable persistent history tracking
+                description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+                
+                // Disable CloudKit remote notifications for simulator
+                #if targetEnvironment(simulator)
+                description.cloudKitContainerOptions = nil
+                #else
+                // Configure CloudKit for real devices
+                let cloudKitOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.com.medcabinet")
+                cloudKitOptions.databaseScope = .private
+                description.cloudKitContainerOptions = cloudKitOptions
+                #endif
+            }
         }
         
-        // Data Migration Support (Automatic)
-        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)
-        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSInferMappingModelAutomaticallyOption)
-        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
-        
         container.loadPersistentStores { description, error in
-            if let error = error {
+            if let error = error as NSError? {
+                // More detailed error logging
+                print("Core Data Store failed to load:")
+                print("  Error Domain: \(error.domain)")
+                print("  Error Code: \(error.code)")
+                print("  Error Description: \(error.localizedDescription)")
+                print("  Store Description: \(description)")
+                
+                // Don't crash in simulator, just log the error
+                #if targetEnvironment(simulator)
+                print("Running in simulator - continuing without persistent store")
+                #else
                 fatalError("Core Data Store failed: \(error.localizedDescription)")
+                #endif
+            } else {
+                print("Core Data Store loaded successfully: \(description.url?.path ?? "unknown")")
             }
         }
         
@@ -42,7 +71,7 @@ class PersistenceController: ObservableObject {
             do {
                 try container.viewContext.setQueryGenerationFrom(.current)
             } catch {
-                fatalError("Failed to pin viewContext to current generation: \(error)")
+                print("Failed to pin viewContext to current generation: \(error)")
             }
         }
     }
@@ -109,7 +138,7 @@ extension PersistenceController {
         do {
             try context.save()
         } catch {
-            fatalError("Error saving preview data: \(error.localizedDescription)")
+            print("Error saving preview data: \(error.localizedDescription)")
         }
         
         return controller

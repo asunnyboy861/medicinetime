@@ -26,14 +26,17 @@ struct QueryMedicationIntent: AppIntent {
         let medications = fetchMedications(name: medicationName)
         
         if let medication = medications.first {
+            let name = medication.name ?? "Medication"
+            let unit = medication.unit ?? "units"
+            
             if medication.quantity <= 0 {
-                return .result(dialog: "You have \(medication.name) but you're out of it.")
+                return .result(dialog: "You have \(name) but you're out of it.")
             } else if medication.daysUntilExpiry < 0 {
-                return .result(dialog: "You have \(medication.name), but it has expired.")
+                return .result(dialog: "You have \(name), but it has expired.")
             } else if medication.needsRestock {
-                return .result(dialog: "You have \(medication.name). Only \(medication.quantity) \(medication.unit) left - you should restock soon!")
+                return .result(dialog: "You have \(name). Only \(medication.quantity) \(unit) left - you should restock soon!")
             } else {
-                return .result(dialog: "Yes, you have \(medication.name). \(medication.quantity) \(medication.unit) in your cabinet.")
+                return .result(dialog: "Yes, you have \(name). \(medication.quantity) \(unit) in your cabinet.")
             }
         } else {
             return .result(dialog: "You don't have \(medicationName) in your cabinet.")
@@ -66,7 +69,7 @@ struct ExpiringSoonIntent: AppIntent {
         if medications.isEmpty {
             return .result(dialog: "Good news! No medications are expiring soon.")
         } else {
-            let names = medications.map { $0.name }.joined(separator: ", ")
+            let names = medications.compactMap { $0.name }.joined(separator: ", ")
             let count = medications.count
             return .result(dialog: "You have \(count) medication\(count == 1 ? "" : "s") expiring soon: \(names)")
         }
@@ -100,7 +103,7 @@ struct LowStockIntent: AppIntent {
         if medications.isEmpty {
             return .result(dialog: "Your medication cabinet is well stocked!")
         } else {
-            let names = medications.map { $0.name }.joined(separator: ", ")
+            let names = medications.compactMap { $0.name }.joined(separator: ", ")
             let count = medications.count
             return .result(dialog: "You have \(count) medication\(count == 1 ? "" : "s") running low: \(names)")
         }

@@ -9,15 +9,21 @@ import SwiftUI
 
 @main
 struct medicinetimeApp: App {
-    @StateObject private var persistenceController = PersistenceController()
+    @StateObject private var viewModel: MedicationViewModel
     @StateObject private var notificationManager = NotificationManager()
     @State private var shortcutAction: ShortcutAction?
     
+    init() {
+        let persistence = PersistenceController.shared
+        _viewModel = StateObject(wrappedValue: MedicationViewModel(persistenceController: persistence))
+        _notificationManager = StateObject(wrappedValue: NotificationManager())
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView(shortcutAction: $shortcutAction)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .environmentObject(persistenceController)
+            ContentView(viewModel: viewModel, shortcutAction: $shortcutAction)
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+                .environmentObject(PersistenceController.shared)
                 .environmentObject(notificationManager)
                 .onAppear {
                     Task {
@@ -26,8 +32,7 @@ struct medicinetimeApp: App {
                     notificationManager.setupNotificationCategories()
                     setupShortcutItems()
                 }
-                .onChange(of: shortcutAction) { newValue in
-                    // Handle shortcut action in ContentView
+                .onChange(of: shortcutAction) { oldValue, newValue in
                 }
         }
         .commands {

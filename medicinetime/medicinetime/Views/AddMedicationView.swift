@@ -38,7 +38,7 @@ struct AddMedicationView: View {
                     Picker("Category", selection: $selectedCategory) {
                         Text("Select Category").tag(nil as Category?)
                         ForEach(viewModel.categories) { category in
-                            Text(category.name).tag(category as Category?)
+                            Text(category.name ?? "Unknown").tag(category as Category?)
                         }
                     }
                     

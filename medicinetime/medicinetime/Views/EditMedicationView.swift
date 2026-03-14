@@ -24,12 +24,12 @@ struct EditMedicationView: View {
     
     init(medication: Medication) {
         self.medication = medication
-        _name = State(initialValue: medication.name)
+        _name = State(initialValue: medication.displayName)
         _quantity = State(initialValue: medication.quantity)
-        _unit = State(initialValue: medication.unit)
-        _expirationDate = State(initialValue: medication.expirationDate)
-        _location = State(initialValue: medication.location ?? "")
-        _notes = State(initialValue: medication.notes ?? "")
+        _unit = State(initialValue: medication.displayUnit)
+        _expirationDate = State(initialValue: medication.safeExpirationDate)
+        _location = State(initialValue: medication.displayLocation)
+        _notes = State(initialValue: medication.displayNotes)
         _isPrivate = State(initialValue: medication.isPrivate)
         _lowStockThreshold = State(initialValue: medication.lowStockThreshold)
         _selectedImage = State(initialValue: medication.image)

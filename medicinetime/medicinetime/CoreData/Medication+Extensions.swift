@@ -1,5 +1,5 @@
 //
-//  Medication+CoreDataClass.swift
+//  Medication+Extensions.swift
 //  medicinetime
 //
 //  Created on 2026-03-10.
@@ -11,41 +11,44 @@ import CloudKit
 import UIKit
 import SwiftUI
 
-@objc(Medication)
-public class Medication: NSManagedObject, Identifiable {
-    @NSManaged public var id: UUID
-    @NSManaged public var name: String
-    @NSManaged public var barcode: String?
-    @NSManaged public var category: String
-    @NSManaged public var expirationDate: Date
-    @NSManaged public var purchaseDate: Date
-    @NSManaged public var quantity: Int16
-    @NSManaged public var unit: String
-    @NSManaged public var dosage: String?
-    @NSManaged public var notes: String?
-    @NSManaged public var imageData: Data?
-    @NSManaged public var thumbnailData: Data?
-    @NSManaged public var photoReferences: NSSet?
-    @NSManaged public var location: String?
-    @NSManaged public var familyID: String?
-    @NSManaged public var isPrivate: Bool
-    @NSManaged public var isLowStock: Bool
-    @NSManaged public var lowStockThreshold: Int16
-    @NSManaged public var averageUsagePerMonth: Double
-    @NSManaged public var lastUsedDate: Date?
-    @NSManaged public var usageRecords: NSSet?
-    @NSManaged public var categoryRef: Category?
-    @NSManaged public var lastUpdated: Date
-}
-
-// MARK: - Computed Properties
 extension Medication {
+    
+    // MARK: - Display Properties (for UI)
+    
+    public var displayName: String {
+        name ?? "Unknown Medication"
+    }
+    
+    public var displayCategory: String {
+        category ?? "Uncategorized"
+    }
+    
+    public var displayUnit: String {
+        unit ?? "units"
+    }
+    
+    public var displayLocation: String {
+        location ?? ""
+    }
+    
+    public var displayNotes: String {
+        notes ?? ""
+    }
+    
+    public var safeExpirationDate: Date {
+        expirationDate ?? Date().addingTimeInterval(365 * 86400)
+    }
+    
+    // MARK: - Computed Properties
+    
     public var isExpired: Bool {
-        return expirationDate < Date()
+        guard let date = expirationDate else { return false }
+        return date < Date()
     }
     
     public var daysUntilExpiry: Int {
-        return Calendar.current.dateComponents([.day], from: Date(), to: expirationDate).day ?? 0
+        guard let date = expirationDate else { return 365 }
+        return Calendar.current.dateComponents([.day], from: Date(), to: date).day ?? 0
     }
     
     public var expiryStatus: ExpiryStatus {
@@ -70,6 +73,8 @@ extension Medication {
         return UIImage(data: data)
     }
     
+    // MARK: - Family Access
+    
     public func isVisibleTo(member: FamilyMember) -> Bool {
         if isPrivate {
             return member.role == "admin"
@@ -81,7 +86,7 @@ extension Medication {
         if isPrivate && member.role != "admin" {
             return "Private Medication"
         }
-        return name
+        return displayName
     }
     
     public func getQuantity(for member: FamilyMember) -> Int16 {
@@ -92,7 +97,8 @@ extension Medication {
     }
 }
 
-// MARK: - ExpiryStatus Enum
+// MARK: - Expiry Status Enum
+
 public enum ExpiryStatus: Int, CaseIterable {
     case expired
     case expiringSoon
@@ -115,13 +121,5 @@ public enum ExpiryStatus: Int, CaseIterable {
         case .expiringIn3Months: return "Expiring in 3 Months"
         case .good: return "Good"
         }
-    }
-}
-
-// MARK: - Core Data Generated Code
-@available(iOS 16.0, *)
-extension Medication {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Medication> {
-        return NSFetchRequest<Medication>(entityName: "Medication")
     }
 }

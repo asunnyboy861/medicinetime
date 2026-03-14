@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6AC779F22F60818400431774 /* MedCabinet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6AC779F02F60818400431774 /* MedCabinet.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		6A0DF2372F5FA13F00B7460D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		6A0DF2292F5FA13D00B7460D /* medicinetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = medicinetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A0DF2362F5FA13F00B7460D /* medicinetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = medicinetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A0DF2402F5FA13F00B7460D /* medicinetimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = medicinetimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AC779F12F60818400431774 /* MedCabinet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MedCabinet.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		6A0DF2202F5FA13D00B7460D = {
 			isa = PBXGroup;
 			children = (
+				6AC779F02F60818400431774 /* MedCabinet.xcdatamodeld */,
 				6A0DF22B2F5FA13D00B7460D /* medicinetime */,
 				6A0DF2392F5FA13F00B7460D /* medicinetimeTests */,
 				6A0DF2432F5FA13F00B7460D /* medicinetimeUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AC779F22F60818400431774 /* MedCabinet.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,6 +573,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6AC779F02F60818400431774 /* MedCabinet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6AC779F12F60818400431774 /* MedCabinet.xcdatamodel */,
+			);
+			currentVersion = 6AC779F12F60818400431774 /* MedCabinet.xcdatamodel */;
+			path = MedCabinet.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6A0DF2212F5FA13D00B7460D /* Project object */;
 }
