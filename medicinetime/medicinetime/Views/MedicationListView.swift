@@ -14,7 +14,7 @@ struct MedicationListView: View {
     @State private var selectedMedication: Medication?
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 // Search Bar
                 SearchBar(text: $viewModel.searchText)

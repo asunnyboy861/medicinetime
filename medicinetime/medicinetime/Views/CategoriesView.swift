@@ -12,7 +12,7 @@ struct CategoriesView: View {
     @State private var showingAddCategory = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(viewModel.categories) { category in
                     NavigationLink(destination: CategoryDetailView(category: category, viewModel: viewModel)) {

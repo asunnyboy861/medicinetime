@@ -16,7 +16,7 @@ struct SettingsView: View {
     @State private var units = "tablets"
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 // Notifications Section
                 Section("Notifications") {
@@ -66,8 +66,8 @@ struct SettingsView: View {
                         HelpView()
                     }
                     
-                    Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)
-                    Link("Terms of Service", destination: URL(string: "https://example.com/terms")!)
+                    Link("Privacy Policy", destination: URL(string: "https://medicinetime-privacy.zzoutuo.com")!)
+                    Link("Terms of Service", destination: URL(string: "https://medicinetime-support.zzoutuo.com")!)
                 }
                 
                 // Danger Zone Section
@@ -280,6 +280,12 @@ struct HelpView: View {
                 NavigationLink("Contact Support") {
                     FeedbackView()
                 }
+                
+                Link("Online Support Center", destination: URL(string: "https://medicinetime-support.zzoutuo.com")!)
+            }
+            
+            Section("Legal") {
+                Link("Privacy Policy", destination: URL(string: "https://medicinetime-privacy.zzoutuo.com")!)
             }
         }
         .navigationTitle("Help & Support")

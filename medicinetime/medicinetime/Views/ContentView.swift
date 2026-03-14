@@ -56,6 +56,15 @@ struct ContentView: View {
                 }
                 .tag(3)
         }
+        .tabViewStyle(.automatic)
+        .onAppear {
+            // 强制TabBar在iPad上也显示在底部
+            UITabBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().isTranslucent = false
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                UITabBar.appearance().backgroundColor = .systemBackground
+            }
+        }
         .sheet(isPresented: $viewModel.showingAddMedication) {
             AddMedicationView(viewModel: viewModel)
         }
@@ -100,32 +109,30 @@ struct DashboardView: View {
     @State private var showScanner = false
     
     var body: some View {
-        NavigationView {
-            Group {
-                if viewModel.medications.isEmpty {
-                    DashboardEmptyStateView(
-                        showAddMedication: $viewModel.showingAddMedication,
-                        showScanner: $showScanner
-                    )
-                    .navigationTitle("MedCabinet")
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: {
-                                viewModel.showingAddMedication = true
-                            }) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.title2)
-                            }
+        Group {
+            if viewModel.medications.isEmpty {
+                DashboardEmptyStateView(
+                    showAddMedication: $viewModel.showingAddMedication,
+                    showScanner: $showScanner
+                )
+                .navigationTitle("MedCabinet")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            viewModel.showingAddMedication = true
+                        }) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.title2)
                         }
                     }
-                } else {
-                    dashboardContent
                 }
+            } else {
+                dashboardContent
             }
-            .sheet(isPresented: $showScanner) {
-                BarcodeScannerView { barcode in
-                    handleScannedBarcode(barcode)
-                }
+        }
+        .sheet(isPresented: $showScanner) {
+            BarcodeScannerView { barcode in
+                handleScannedBarcode(barcode)
             }
         }
     }
