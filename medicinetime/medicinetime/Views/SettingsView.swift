@@ -180,8 +180,7 @@ struct HelpView: View {
                 }
                 
                 NavigationLink("Contact Support") {
-                    Text("Get help from our support team")
-                        .padding()
+                    FeedbackView()
                 }
             }
         }
