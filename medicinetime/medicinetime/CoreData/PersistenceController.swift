@@ -50,11 +50,35 @@ class PersistenceController: ObservableObject {
                 print("  Error Description: \(error.localizedDescription)")
                 print("  Store Description: \(description)")
                 
-                // Don't crash in simulator, just log the error
-                #if targetEnvironment(simulator)
-                print("Running in simulator - continuing without persistent store")
-                #else
-                fatalError("Core Data Store failed: \(error.localizedDescription)")
+                // Don't crash - attempt recovery
+                #if !targetEnvironment(simulator)
+                // First attempt: try to delete corrupted store and recreate
+                if let storeURL = description.url {
+                    do {
+                        try FileManager.default.removeItem(at: storeURL)
+                        // Try to load again after deleting corrupted store
+                        self.container.loadPersistentStores { _, retryError in
+                            if let retryError = retryError as NSError? {
+                                print("Failed to recreate store: \(retryError.localizedDescription)")
+                                // Second attempt: disable CloudKit and use local-only store
+                                description.cloudKitContainerOptions = nil
+                                self.container.loadPersistentStores { _, fallbackError in
+                                    if let fallbackError = fallbackError as NSError? {
+                                        print("Fallback to local store also failed: \(fallbackError.localizedDescription)")
+                                        // Last resort: use in-memory store
+                                        self.container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+                                        self.container.loadPersistentStores { _, _ in }
+                                    }
+                                }
+                            }
+                        }
+                    } catch {
+                        print("Failed to delete corrupted store: \(error.localizedDescription)")
+                        // Fallback to in-memory store
+                        self.container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+                        self.container.loadPersistentStores { _, _ in }
+                    }
+                }
                 #endif
             } else {
                 print("Core Data Store loaded successfully: \(description.url?.path ?? "unknown")")
