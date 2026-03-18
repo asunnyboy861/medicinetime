@@ -11,7 +11,6 @@ struct SettingsView: View {
     @State private var notificationEnabled = true
     @State private var lowStockAlertEnabled = true
     @State private var expiryAlertEnabled = true
-    @State private var backupEnabled = true
     @State private var darkModeEnabled = false
     @State private var units = "tablets"
     
@@ -35,8 +34,6 @@ struct SettingsView: View {
                 
                 // Backup & Sync Section
                 Section("Backup & Sync") {
-                    Toggle("iCloud Backup", isOn: $backupEnabled)
-                    
                     NavigationLink("Export Data") {
                         ExportDataView()
                     }

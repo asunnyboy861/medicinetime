@@ -20,7 +20,7 @@ class PersistenceController: ObservableObject {
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         } else {
-            // Configure CloudKit options
+            // Configure store options
             if let description = container.persistentStoreDescriptions.first {
                 // Enable automatic migration
                 description.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)
@@ -29,25 +29,17 @@ class PersistenceController: ObservableObject {
                 // Enable persistent history tracking
                 description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
                 
-                // Disable CloudKit remote notifications for simulator
-                #if targetEnvironment(simulator)
+                // CRITICAL: Disable CloudKit to prevent crashes on real devices
+                // CloudKit requires proper iCloud entitlements and container setup
+                // Without proper configuration, it causes launch crashes
                 description.cloudKitContainerOptions = nil
-                #else
-                // Configure CloudKit for real devices
-                let cloudKitOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.com.medcabinet")
-                cloudKitOptions.databaseScope = .private
-                description.cloudKitContainerOptions = cloudKitOptions
-                #endif
             }
         }
         
         // Add timeout protection for store loading
         let loadingSemaphore = DispatchSemaphore(value: 0)
-        var storeLoadError: NSError?
         
         container.loadPersistentStores { description, error in
-            storeLoadError = error as NSError?
-            
             if let error = error as NSError? {
                 // More detailed error logging
                 print("Core Data Store failed to load:")
@@ -78,8 +70,8 @@ class PersistenceController: ObservableObject {
                                         // Last resort: use in-memory store
                                         print("Final fallback: using in-memory store")
                                         self.container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-                                        self.container.loadPersistentStores { finalError in
-                                            if let finalError = finalError {
+                                        self.container.loadPersistentStores { _, finalError in
+                                            if let finalError = finalError as NSError? {
                                                 print("Even in-memory store failed: \(finalError.localizedDescription)")
                                             } else {
                                                 print("Successfully loaded in-memory store")

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - MedCabinet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 50px 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .section p {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        
+        .contact-box {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid #e8eaff;
+        }
+        
+        .contact-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .email-link {
+            display: inline-block;
+            color: #667eea;
+            font-size: 1.2em;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 24px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .email-link:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .faq-item {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .faq-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .faq-item p {
+            color: #666;
+            margin-bottom: 0;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+            font-size: 1.05em;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9ff;
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 600px) {
+            .header {
+                padding: 40px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Technical Support</h1>
+            <p>MedCabinet - Your Home Medication Inventory Manager</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>Contact Us</h2>
+                <p>If you encounter any issues while using MedCabinet, or have any suggestions and feedback, please feel free to contact us. We will respond within 24 hours.</p>
+                
+                <div class="contact-box">
+                    <h3>📧 Support Email</h3>
+                    <a href="mailto:iocompile67692@gmail.com" class="email-link">iocompile67692@gmail.com</a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <h3>How do I add medications to my inventory?</h3>
+                    <p>Tap the "+" button on the home screen. You can add medications by scanning barcodes, taking photos, or manual entry. The app will automatically identify medication information and record expiration dates.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>How do expiration alerts work?</h3>
+                    <p>MedCabinet automatically sends notification alerts 3 months before your medications expire, giving you plenty of time to decide whether to repurchase.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>How do I share my medication inventory with family?</h3>
+                    <p>Enable iCloud sync in Settings, and your medication inventory will automatically sync across all family members' devices using the same Apple ID.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Where is my data stored?</h3>
+                    <p>All your data is stored locally on your device by default. If iCloud sync is enabled, data is encrypted and stored in your iCloud account. We do not store any user data on our servers.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>How do I export my medication list?</h3>
+                    <p>Select "Export Data" in Settings. You can export your medication inventory as PDF or CSV format, convenient for insurance claims or doctor consultations.</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>App Features</h2>
+                <ul class="feature-list">
+                    <li>Smart medication inventory management</li>
+                    <li>Automatic expiration date tracking</li>
+                    <li>Barcode scanning for quick entry</li>
+                    <li>Medication photo records</li>
+                    <li>Family sharing support</li>
+                    <li>Offline usage support</li>
+                    <li>Data export functionality</li>
+                    <li>Privacy-first design</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>Feedback & Suggestions</h2>
+                <p>We value your feedback and suggestions. If you have any ideas to help us improve MedCabinet, or would like to see certain new features, please contact us via the email above.</p>
+                <p>Your input will help us create a better medication management experience.</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 MedCabinet. All rights reserved.</p>
+            <p>Last Updated: March 14, 2026</p>
+        </div>
+    </div>
+</body>
+</html>
