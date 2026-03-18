@@ -41,7 +41,13 @@ class PersistenceController: ObservableObject {
             }
         }
         
+        // Add timeout protection for store loading
+        let loadingSemaphore = DispatchSemaphore(value: 0)
+        var storeLoadError: NSError?
+        
         container.loadPersistentStores { description, error in
+            storeLoadError = error as NSError?
+            
             if let error = error as NSError? {
                 // More detailed error logging
                 print("Core Data Store failed to load:")
@@ -49,40 +55,66 @@ class PersistenceController: ObservableObject {
                 print("  Error Code: \(error.code)")
                 print("  Error Description: \(error.localizedDescription)")
                 print("  Store Description: \(description)")
+                print("  Store URL: \(description.url?.path ?? "unknown")")
                 
-                // Don't crash - attempt recovery
-                #if !targetEnvironment(simulator)
+                // Don't crash - attempt recovery on all platforms
                 // First attempt: try to delete corrupted store and recreate
                 if let storeURL = description.url {
+                    print("Attempting to recover by removing corrupted store at: \(storeURL.path)")
                     do {
                         try FileManager.default.removeItem(at: storeURL)
+                        print("Successfully removed corrupted store, attempting reload...")
+                        
                         // Try to load again after deleting corrupted store
                         self.container.loadPersistentStores { _, retryError in
                             if let retryError = retryError as NSError? {
                                 print("Failed to recreate store: \(retryError.localizedDescription)")
                                 // Second attempt: disable CloudKit and use local-only store
+                                print("Attempting fallback to local-only storage (disabling CloudKit)...")
                                 description.cloudKitContainerOptions = nil
                                 self.container.loadPersistentStores { _, fallbackError in
                                     if let fallbackError = fallbackError as NSError? {
                                         print("Fallback to local store also failed: \(fallbackError.localizedDescription)")
                                         // Last resort: use in-memory store
+                                        print("Final fallback: using in-memory store")
                                         self.container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-                                        self.container.loadPersistentStores { _, _ in }
+                                        self.container.loadPersistentStores { finalError in
+                                            if let finalError = finalError {
+                                                print("Even in-memory store failed: \(finalError.localizedDescription)")
+                                            } else {
+                                                print("Successfully loaded in-memory store")
+                                            }
+                                        }
+                                    } else {
+                                        print("Successfully loaded local-only store")
                                     }
                                 }
+                            } else {
+                                print("Successfully recreated store after corruption")
                             }
                         }
                     } catch {
                         print("Failed to delete corrupted store: \(error.localizedDescription)")
                         // Fallback to in-memory store
+                        print("Falling back to in-memory store")
                         self.container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
                         self.container.loadPersistentStores { _, _ in }
                     }
                 }
-                #endif
             } else {
-                print("Core Data Store loaded successfully: \(description.url?.path ?? "unknown")")
+                print("✅ Core Data Store loaded successfully: \(description.url?.path ?? "unknown")")
             }
+            
+            loadingSemaphore.signal()
+        }
+        
+        // Wait for store loading with timeout (max 10 seconds)
+        let waitResult = loadingSemaphore.wait(timeout: .now() + 10.0)
+        if waitResult == .timedOut {
+            print("⚠️ Core Data store loading timed out after 10 seconds")
+            print("Continuing with in-memory store to prevent app hang")
+            container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+            container.loadPersistentStores { _, _ in }
         }
         
         container.viewContext.automaticallyMergesChangesFromParent = true

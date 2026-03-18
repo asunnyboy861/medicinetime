@@ -66,8 +66,12 @@ struct SettingsView: View {
                         HelpView()
                     }
                     
-                    Link("Privacy Policy", destination: URL(string: "https://medicinetime-privacy.zzoutuo.com")!)
-                    Link("Terms of Service", destination: URL(string: "https://medicinetime-support.zzoutuo.com")!)
+                    if let privacyURL = URL(string: "https://medicinetime-privacy.zzoutuo.com") {
+                        Link("Privacy Policy", destination: privacyURL)
+                    }
+                    if let termsURL = URL(string: "https://medicinetime-support.zzoutuo.com") {
+                        Link("Terms of Service", destination: termsURL)
+                    }
                 }
                 
                 // Danger Zone Section
@@ -281,11 +285,15 @@ struct HelpView: View {
                     FeedbackView()
                 }
                 
-                Link("Online Support Center", destination: URL(string: "https://medicinetime-support.zzoutuo.com")!)
+                if let supportURL = URL(string: "https://medicinetime-support.zzoutuo.com") {
+                    Link("Online Support Center", destination: supportURL)
+                }
             }
             
             Section("Legal") {
-                Link("Privacy Policy", destination: URL(string: "https://medicinetime-privacy.zzoutuo.com")!)
+                if let privacyURL = URL(string: "https://medicinetime-privacy.zzoutuo.com") {
+                    Link("Privacy Policy", destination: privacyURL)
+                }
             }
         }
         .navigationTitle("Help & Support")

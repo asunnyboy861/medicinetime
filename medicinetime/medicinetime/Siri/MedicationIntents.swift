@@ -78,7 +78,9 @@ struct ExpiringSoonIntent: AppIntent {
     private func fetchExpiringMedications() -> [Medication] {
         let context = PersistenceController.shared.container.viewContext
         let request: NSFetchRequest<Medication> = Medication.fetchRequest()
-        let thirtyDaysFromNow = Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+        guard let thirtyDaysFromNow = Calendar.current.date(byAdding: .day, value: 30, to: Date()) else {
+            return []
+        }
         request.predicate = NSPredicate(format: "expirationDate <= %@ AND expirationDate >= %@", thirtyDaysFromNow as CVarArg, Date() as CVarArg)
         request.sortDescriptors = [NSSortDescriptor(key: "expirationDate", ascending: true)]
         request.fetchLimit = 5

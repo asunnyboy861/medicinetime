@@ -51,7 +51,9 @@ class MedicationViewModel: NSObject, ObservableObject {
             try fetchedResultsController?.performFetch()
             medications = fetchedResultsController?.fetchedObjects ?? []
         } catch {
-            errorMessage = "Error fetching medications: \(error.localizedDescription)"
+            print("Error fetching medications: \(error.localizedDescription)")
+            errorMessage = "Unable to load medications. Please restart the app."
+            medications = []
         }
     }
     
@@ -67,7 +69,9 @@ class MedicationViewModel: NSObject, ObservableObject {
                 createDefaultCategories()
             }
         } catch {
-            errorMessage = "Error fetching categories: \(error.localizedDescription)"
+            print("Error fetching categories: \(error.localizedDescription)")
+            errorMessage = "Unable to load categories. Please restart the app."
+            categories = []
         }
     }
     
